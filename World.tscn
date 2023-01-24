@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://MapLoader.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Camera.gd" type="Script" id=2]
+[ext_resource path="res://Loading.tscn" type="PackedScene" id=3]
+
+[node name="World" type="Spatial"]
+
+[node name="MapLoader" parent="." instance=ExtResource( 1 )]
+world = NodePath("..")
+loading = NodePath("../Loading")
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 0, 0 )
+
+[node name="Loading" parent="." instance=ExtResource( 3 )]
+camera = NodePath("../Camera")
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 10 )
+current = true
+script = ExtResource( 2 )
