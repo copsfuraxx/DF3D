@@ -1,6 +1,10 @@
 class_name MapJsonMaker
+extends Node
 
-const Voisin = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]
+const Voisin = [Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0, -1)]
+
+func _ready():
+	generate()
 
 func generate():
 	var file = File.new()
@@ -40,11 +44,22 @@ func generate():
 			for j in range(60):
 				if map[niv][i][j] == -1:
 					var cb = 0
+					var dir = []
+					var d = 0
 					for v in Voisin:
 						var v2 = Vector2(i, j) + v
 						if (v2.x < 60 and v2.x >= 0 and v2.y < 60 and v2.y >= 0) and \
-						   (map[niv][v2.x][v2.y] == 0): cb += 1
-					if cb > 0: map[niv][i][j] = 1
+						   (map[niv][v2.x][v2.y] == 0):
+							cb += 1
+							dir.append(d)
+						d += 1
+					if cb == 1: map[niv][i][j] = 1 + dir[0]
+					elif cb == 2:
+						if abs(dir[0] - dir[1]) != 2:
+							if dir[0] == 0:
+								if dir[1] == 1: map[niv][i][j] = 6
+								else: map[niv][i][j] = 5
+							else: map[niv][i][j] = 5 + dir[1]
 	file.store_line("\t\"map\": ")
 	file.store_line("\t[")
 	for niv in range(3):

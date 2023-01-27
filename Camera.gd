@@ -3,7 +3,11 @@ extends Camera
 export(float) var speed = 20.0
 var canMove = false
 
+var mouse
+var timer =.0
+
 func _process(delta):
+	if timer > .0 : timer -= delta
 	if not canMove: return
 	var move:Vector3 = Vector3.ZERO
 	if Input.is_action_pressed("Left"):
@@ -30,6 +34,17 @@ func _process(delta):
 		r -= PI/2
 	if r != .0:
 		rotation.y += r * delta
+
+	if Input.is_action_pressed("Left_click") and timer <= .0:
+		var space_state = get_world().direct_space_state
+		var to = global_translation + project_ray_normal(mouse) * 100
+		var result = space_state.intersect_ray(global_translation, to)
+		result.collider.queue_free()
+		timer = .5
+
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		mouse = event.global_position
 
 func up():
 	translation.y += 1.0

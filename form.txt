@@ -1,0 +1,32 @@
+//rampe
+vertices.push_back(Vector3(0, 0, 0))
+vertices.push_back(Vector3(-1, -1, -1))
+vertices.push_back(Vector3(0, -1, -1))
+
+vertices.push_back(Vector3(0, 0, 0))
+vertices.push_back(Vector3(-1, 0, 0))
+vertices.push_back(Vector3(-1, -1, -1))
+
+vertices.push_back(Vector3(-1, 0, 0))
+vertices.push_back(Vector3(-1, -1, 0))
+vertices.push_back(Vector3(-1, -1, -1))
+
+vertices.push_back(Vector3(0, 0, 0))
+vertices.push_back(Vector3(0, -1, -1))
+vertices.push_back(Vector3(0, -1, 0))
+
+vertices.push_back(Vector3(0, 0, 0))
+vertices.push_back(Vector3(0, -1, 0))
+vertices.push_back(Vector3(-1, 0, 0))
+
+vertices.push_back(Vector3(-1, 0, 0))
+vertices.push_back(Vector3(0, -1, 0))
+vertices.push_back(Vector3(-1, -1, 0))
+
+vertices.push_back(Vector3(0, -1, -1))
+vertices.push_back(Vector3(-1, -1, -1))
+vertices.push_back(Vector3(-1, -1, 0))
+
+vertices.push_back(Vector3(0, -1, -1))
+vertices.push_back(Vector3(-1, -1, 0))
+vertices.push_back(Vector3(0,-1,0))

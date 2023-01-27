@@ -9,7 +9,8 @@ var map_scene = preload("res://Map.tscn")
 var niveau_scene = preload("res://Niveau.tscn")
 var region_scene = preload("res://Region.tscn")
 var block_scene = preload("res://Block/Block.tscn")
-var rampe_scene = preload("res://Block/Rampe.tscn")
+var rampe_scene = preload("res://Block/Rampe/Rampe.tscn")
+var rampe2_scene = preload("res://Block/Rampe/RampeB.tscn")
 var map:Map
 var niveau:Niveau
 var region:Region
@@ -30,6 +31,7 @@ func _process(_delta):
 		thread.start(self, "init_map", null)
 	elif thread.is_active() and not thread.is_alive():
 		thread.wait_to_finish()
+		emit_signal("progress", 1)
 		queue_free()
 
 func init_map(_param):
@@ -66,14 +68,14 @@ func initRegion():
 			region.region_x = i
 			region.region_y = j
 			region.block_size = json.block_size
-			region.translation.x = i * niveau.region_size
-			region.translation.z = j * niveau.region_size
+			region.translation.x = i * json.block_size
+			region.translation.z = j * json.block_size
 			region.set_region_visible(niveau.niv_visible)
 			niveau.call_deferred("add_child", region)
-			region.call_deferred("bake_navigation_mesh", false)
 			if not region.full: niveau.full = false
 			
 			initBlock()
+			region.call_deferred("bake_navigation_mesh", false)
 			emit_signal("progress", progress)
 
 func initBlock():
@@ -81,11 +83,15 @@ func initBlock():
 		for j in range(json.block_size):
 			var idBlock = json.map[niveau.niveau][json.block_size * region.region_x + i]\
 			[json.block_size * region.region_y + j]
-			if idBlock != -1:
+			if idBlock >= 0:
 				if idBlock == 0:
 						block = block_scene.instance()
-				if idBlock == 1:
+				elif idBlock < 5:
 						block = rampe_scene.instance()
+						block.setRotation(idBlock - 1)
+				elif idBlock < 9:
+						block = rampe2_scene.instance()
+						block.setRotation(idBlock - 5)
 				block.name += str(i) + '_' + str(j)
 				block.translation.x = i
 				block.translation.z = j

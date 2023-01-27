@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Map.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "MapJsonMaker",
 "language": "GDScript",
 "path": "res://MapJsonMaker.gd"
